@@ -6,7 +6,9 @@ import { FormInput } from "./FormInput";
 import { signUpSchema } from "@/lib/zodSchemas";
 import { z } from "zod";
 import { toast } from "sonner";
+import { signUpAction } from "@/app/signup/serverAction";
 
+// formatted zod error structure
 export type FieldErrors = {
   full_name?: { _errors: string[] };
   email?: { _errors: string[] };
@@ -53,7 +55,7 @@ async function formAction(
 
   try {
     // Send to server action
-    const response = await signupAction(validatedData.data);
+    const response = await signUpAction(validatedData.data);
 
     // If success, return initial state to reset form
     if (response.success) {

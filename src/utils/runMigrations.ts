@@ -1,18 +1,17 @@
 import "server-only";
 
 import path from "path";
-import migrate from "node-pg-migrate";
+import { runner } from "node-pg-migrate";
 import server_env from "@/utils/env.server";
 
 const MIGRATION_DIR = path.resolve(process.cwd(), "migrations");
-console.log("MIGRATION DIR", MIGRATION_DIR);
 
 export default async function runMigrations() {
   console.log("Running migrations...");
-  await migrate({
+  await runner({
     dir: MIGRATION_DIR,
     direction: "up",
-    log: () => {},
+    log: (msg) => console.log(msg),
     noLock: true,
     migrationsTable: "pgmigrations",
     databaseUrl: {

@@ -62,7 +62,9 @@ Shortener IT Team
           text-decoration: none;
           border-radius: 5px;
           font-weight: bold;
-        ">Verify Email Address</a>
+        ">
+        Verify Account
+        </a>
       </div>
 
       <div style="color: ${styles.colors.text}; font-size: 14px; line-height: 20px;">

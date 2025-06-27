@@ -17,6 +17,9 @@ const envSchema = z.object({
   SMTP_HOST: z.string().min(1),
   SMTP_USER: z.string().email(),
   SMTP_PASSWORD: z.string().min(1),
+
+  // jwt
+  JWT_SECRET: z.string().min(1),
 });
 
 function validateEnv() {

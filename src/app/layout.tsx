@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import pool from "@/lib/db";
 import { Toaster } from "@/components/ui/sonner";
-// import "../lib/runMigrations";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +23,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { rows } = await pool.query("SELECT * FROM users;");
-  console.log(rows);
-
   return (
     <html lang="en">
       <body

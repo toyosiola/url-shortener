@@ -71,6 +71,7 @@ export const down = (pgm) => {
     `-- drop tables
     DROP TABLE IF EXISTS url_clicks;
     DROP TABLE IF EXISTS urls;
+    DROP TABLE IF EXISTS account_verifications;
     DROP TABLE IF EXISTS users;
 
     -- drop custom types

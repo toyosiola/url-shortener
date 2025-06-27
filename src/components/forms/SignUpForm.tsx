@@ -7,6 +7,8 @@ import { signUpSchema } from "@/lib/zodSchemas";
 import { z } from "zod";
 import { toast } from "sonner";
 import { signUpAction } from "@/app/signup/serverAction";
+import { useSearchParams } from "next/navigation";
+import { ExclamationOctagon } from "../icons";
 
 // formatted zod error structure
 export type FieldErrors = {
@@ -76,6 +78,8 @@ async function formAction(
 
 export default function SignUpForm() {
   const [state, action, isPending] = useActionState(formAction, initialState);
+  // if error occured verifying user account. Expired or invalid verification token
+  const errorMessage = useSearchParams().get("error");
 
   return (
     <form action={action} className="space-y-6">
@@ -127,11 +131,19 @@ export default function SignUpForm() {
         />
       </div>
 
-      <SubmitButton
-        isPending={isPending}
-        pendingText="Signing up..."
-        defaultText="Sign up"
-      />
+      <div>
+        <SubmitButton
+          isPending={isPending}
+          pendingText="Signing up..."
+          defaultText="Sign up"
+        />
+        {errorMessage && (
+          <p className="mt-4 flex items-center justify-center gap-2 rounded-sm bg-red-100 p-2 px-4 text-sm text-red-600">
+            <ExclamationOctagon aria-hidden className="size-5" />
+            {errorMessage}
+          </p>
+        )}
+      </div>
     </form>
   );
 }

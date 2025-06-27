@@ -1,14 +1,14 @@
 "use server";
 
-import { FieldErrors } from "@/components/forms/SignUpForm";
 // ====== SERVER ACTION HANDLE USER SIGN-UP =========
 
+import { FieldErrors } from "@/components/forms/SignUpForm";
 import { signupVerification } from "@/lib/emailTemplates";
-import emailTransporter from "@/lib/emailTransporter";
+import emailTransporter from "@/utils/emailTransporter";
 import { signUpSchema } from "@/lib/zodSchemas";
 import server_env from "@/utils/env.server";
 import { z } from "zod";
-import pool from "@/lib/db";
+import pool from "@/utils/db";
 import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { PoolClient } from "pg";
@@ -44,7 +44,7 @@ export async function signUpAction(
 
   let client: PoolClient | null = null;
   try {
-    // obtain dedicated connection from pool
+    // obtain dedicated db connection from pool
     client = await pool.connect();
     // begin transaction
     await client.query("BEGIN;");
@@ -98,10 +98,10 @@ export async function signUpAction(
           to: email,
           subject: signupVerification.subject,
           text: signupVerification.text({
-            confirmLink: `${server_env.BASE_URL}/verify-email?token=${token}`,
+            confirmLink: `${server_env.BASE_URL}/api/auth/verify-account?token=${token}`,
           }),
           html: signupVerification.html({
-            confirmLink: `${server_env.BASE_URL}/verify-email?token=${token}`,
+            confirmLink: `${server_env.BASE_URL}/api/auth/verify-account?token=${token}`,
           }),
         });
 
@@ -121,7 +121,7 @@ export async function signUpAction(
       const user_id = rows[0].id;
       await client.query(
         `INSERT INTO account_verifications (user_id, email, token, expires_at)
-         VALUES ($1, $2, $3, NOW() + INTERVAL '15 mins);`,
+         VALUES ($1, $2, $3, NOW() + INTERVAL '15 mins');`,
         [user_id, email, token],
       );
 
@@ -133,10 +133,10 @@ export async function signUpAction(
         to: email,
         subject: signupVerification.subject,
         text: signupVerification.text({
-          confirmLink: `${server_env.BASE_URL}/verify-email?token=${token}`,
+          confirmLink: `${server_env.BASE_URL}/api/auth/verify-account?token=${token}`,
         }),
         html: signupVerification.html({
-          confirmLink: `${server_env.BASE_URL}/verify-email?token=${token}`,
+          confirmLink: `${server_env.BASE_URL}/api/auth/verify-account?token=${token}`,
         }),
       });
 

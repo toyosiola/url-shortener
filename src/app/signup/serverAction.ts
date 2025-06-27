@@ -68,7 +68,6 @@ export async function signUpAction(
                 "An account with this email already exists. Please login instead.",
               ],
             },
-            _errors: [],
           },
           data: rawData,
         };
@@ -148,13 +147,12 @@ export async function signUpAction(
     }
   } catch (err: any) {
     await client?.query("ROLLBACK");
-    // Handle unique violation (email). Not expected behavior, just in case
+    // Handle unique violation (email). Not expected behavior but just in case
     if (err.code === "23505") {
       return {
         success: false,
         errors: {
           email: { _errors: ["An account with this email already exists."] },
-          _errors: [],
         },
         data: rawData,
       };

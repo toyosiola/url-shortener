@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/utils/db";
-import jwt from "jsonwebtoken";
+import { SignJWT } from "jose";
 import server_env from "@/utils/env.server";
 import { PoolClient } from "pg";
 
@@ -49,9 +49,12 @@ export async function GET(req: NextRequest) {
     await client.query("COMMIT");
 
     // Sign in user (issue JWT)
-    const jwtSecret = server_env.JWT_SECRET;
-    const jwtPayload = { user_id };
-    const jwtToken = jwt.sign(jwtPayload, jwtSecret, { expiresIn: "7d" }); // TODO: Refreshing token
+    const secret = new TextEncoder().encode(server_env.JWT_SECRET);
+    const jwtToken = await new SignJWT({ user_id })
+      .setProtectedHeader({ alg: "HS256" })
+      .setIssuedAt()
+      .setExpirationTime("7d")
+      .sign(secret);
 
     // Set cookie and redirect
     const response = NextResponse.redirect(`${server_env.BASE_URL}/dashboard`);

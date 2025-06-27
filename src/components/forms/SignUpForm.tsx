@@ -16,7 +16,7 @@ export type FieldErrors = {
   email?: { _errors: string[] };
   password?: { _errors: string[] };
   confirm_password?: { _errors: string[] };
-  _errors: string[];
+  _errors?: string[];
 };
 
 type FormState = {
@@ -65,8 +65,8 @@ async function formAction(
       return initialState;
     }
 
-    // If error is not validation error, show error message
-    if (response.errors._errors[0]) toast.error(response.errors._errors[0]);
+    // If error is not validation error, show error toast. Validation error will be rendered under respective input
+    if (response.errors._errors?.[0]) toast.error(response.errors._errors[0]);
     // return form data to persist user provided data in the form
     return { errors: response.errors, data: response.data };
   } catch {

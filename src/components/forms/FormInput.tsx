@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 interface FormInputProps {
   name: string;
   type: string;
-  label: string;
+  label?: string;
   required?: boolean;
   placeholder?: string;
   autoComplete?: string;

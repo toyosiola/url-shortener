@@ -74,7 +74,6 @@ export async function middleware(request: NextRequest) {
     return proceedResponse;
   }
 
-  // Not expected to reach this point. All routes covered by the middleware already handled
   // For any other routes, just refresh session if valid
   if (user) {
     refreshSessionCookie(proceedResponse, sessionToken!);

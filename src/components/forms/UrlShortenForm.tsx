@@ -53,6 +53,7 @@ async function formAction(
     if (response.ok) {
       // Success
       toast.success("URL shortened successfully!");
+      router.refresh(); // refresh the page to show the new entry
       return initialState; // Reset form
     } else {
       // If user is not authenticated, redirect to siginin page

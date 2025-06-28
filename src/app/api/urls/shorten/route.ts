@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
 import { getUser } from "@/utils/verifyUserAuth";
 import { redisRatelimit } from "@/utils/redis";
 import pool from "@/utils/db";

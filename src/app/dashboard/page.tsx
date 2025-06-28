@@ -1,6 +1,8 @@
 import { getUser } from "@/utils/verifyUserAuth";
 import { redirect } from "next/navigation";
 import UrlShortenForm from "@/components/forms/UrlShortenForm";
+import UrlTable, { UrlData } from "@/components/UrlTable";
+import pool from "@/utils/db";
 
 export default async function DashboardPage() {
   const user = await getUser();
@@ -8,6 +10,14 @@ export default async function DashboardPage() {
   if (!user) {
     redirect("/signin");
   }
+
+  // Fetch user's URLs ordered by most recent first
+  const { rows } = await pool.query<UrlData>(
+    `SELECT id, short_slug, original_url, created_at FROM urls 
+     WHERE user_id = $1 
+     ORDER BY created_at DESC;`,
+    [user.id],
+  );
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-gray-100 p-4">
@@ -28,15 +38,8 @@ export default async function DashboardPage() {
           <UrlShortenForm />
         </div>
 
-        {/* URL History Section (placeholder for future) */}
-        <div className="rounded-xl bg-white p-8 shadow-md">
-          <h2 className="mb-6 text-2xl font-bold text-gray-800">
-            Your Shortened URLs
-          </h2>
-          <p className="text-gray-600">
-            Your shortened URLs will appear here once you create them.
-          </p>
-        </div>
+        {/* URL Table */}
+        <UrlTable urls={rows} />
       </div>
     </main>
   );

@@ -28,7 +28,7 @@ interface User {
   id: string;
   full_name: string;
   email: string;
-  tier: string;
+  tier: "free" | "pro";
 }
 
 // function to get authenticated user data from database

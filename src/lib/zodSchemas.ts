@@ -29,3 +29,14 @@ export const loginSchema = z.object({
     .transform((val) => val.toLowerCase()),
   password: z.string().min(1, "Password is required"),
 });
+
+// Validation schema for URL shortening
+export const urlShortenSchema = z.object({
+  url: z
+    .string()
+    .min(1, "URL is required")
+    .url("Please enter a valid URL")
+    .refine((url) => url.startsWith("https://"), {
+      message: "Only HTTPS URLs are allowed",
+    }),
+});

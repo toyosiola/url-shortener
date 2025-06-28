@@ -1,7 +1,6 @@
-import { FormInput } from "@/components/forms/FormInput";
-import SubmitButton from "@/components/forms/SubmitButton";
 import { getUser } from "@/utils/verifyUserAuth";
 import { redirect } from "next/navigation";
+import UrlShortenForm from "@/components/forms/UrlShortenForm";
 
 export default async function DashboardPage() {
   const user = await getUser();
@@ -26,24 +25,7 @@ export default async function DashboardPage() {
             Shorten Your URL
           </h2>
 
-          {/* URL Shortening Form */}
-          <form className="mt-1 flex flex-col gap-4 sm:flex-row sm:items-end">
-            <div className="grow">
-              <FormInput
-                name="url"
-                type="url"
-                className="mt-0"
-                placeholder="https://example.com/very-long-url-that-needs-shortening"
-              />
-            </div>
-
-            <SubmitButton
-              isPending={false}
-              defaultText="Shorten URL"
-              pendingText="Loading"
-              className="mt-0 sm:w-max"
-            />
-          </form>
+          <UrlShortenForm />
         </div>
 
         {/* URL History Section (placeholder for future) */}

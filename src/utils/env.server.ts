@@ -20,6 +20,10 @@ const envSchema = z.object({
 
   // jwt
   JWT_SECRET: z.string().min(1),
+
+  // Redis
+  REDIS_URL: z.string().url(),
+  REDIS_TOKEN: z.string().min(1),
 });
 
 function validateEnv() {

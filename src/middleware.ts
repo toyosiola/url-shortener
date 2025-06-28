@@ -83,6 +83,7 @@ export async function middleware(request: NextRequest) {
   return proceedResponse;
 }
 
+// Middleware run for these routes
 export const config = {
-  matcher: ["/", "/signin", "/signup", "/dashboard"],
+  matcher: ["/", "/signin", "/signup", "/dashboard", "/api/urls/shorten"],
 };

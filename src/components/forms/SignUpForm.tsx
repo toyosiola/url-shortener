@@ -6,7 +6,7 @@ import { FormInput } from "./FormInput";
 import { signUpSchema } from "@/lib/zodSchemas";
 import { z } from "zod";
 import { toast } from "sonner";
-import { signUpAction } from "@/app/signup/serverAction";
+import { signUpAction } from "@/app/auth/signup/serverAction";
 import { useSearchParams } from "next/navigation";
 import { ExclamationOctagon } from "../icons";
 

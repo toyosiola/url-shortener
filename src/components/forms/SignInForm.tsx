@@ -6,7 +6,7 @@ import { FormInput } from "./FormInput";
 import { loginSchema } from "@/lib/zodSchemas";
 import { z } from "zod";
 import { toast } from "sonner";
-import { signInAction } from "@/app/signin/serverAction";
+import { signInAction } from "@/app/auth/signin/serverAction";
 import { FieldErrors } from "./SignUpForm";
 
 type FormState = {

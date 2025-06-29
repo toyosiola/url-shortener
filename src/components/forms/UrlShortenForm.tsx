@@ -82,7 +82,7 @@ export default function UrlShortenForm() {
   return (
     <form
       action={action}
-      className="mt-1 flex flex-col gap-4 sm:flex-row sm:items-end"
+      className="mt-1 flex flex-col gap-4 sm:flex-row sm:items-start"
     >
       <div className="grow">
         <FormInput

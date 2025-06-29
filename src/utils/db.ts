@@ -11,7 +11,6 @@ const pool = new Pool({
   database: server_env.DB_NAME,
   port: server_env.DB_PORT,
   ssl: process.env.NODE_ENV === "production", // Use SSL in production if your database requires it
-  statement_timeout: 20000,
 });
 
 export default pool;

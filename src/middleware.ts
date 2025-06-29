@@ -3,7 +3,7 @@ import { jwtVerify } from "jose";
 import server_env from "@/utils/env.server";
 
 const AUTH_PAGES = ["/", "/signin", "/signup"];
-const DASHBOARD_PAGE = "/dashboard";
+const PROTECTED_ROUTES = ["/dashboard", "/api/urls/shorten", "/analytics"];
 const SESSION_COOKIE = "session";
 const JWT_SECRET = server_env.JWT_SECRET;
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
@@ -45,7 +45,10 @@ export async function middleware(request: NextRequest) {
   const user = sessionToken ? await verifySession(sessionToken) : null;
 
   // Dashboard page logic
-  if (pathname === DASHBOARD_PAGE) {
+  if (
+    PROTECTED_ROUTES.includes(pathname) ||
+    pathname.startsWith("/analytics/") // for dynamic shortened analytics page
+  ) {
     if (!user) {
       // No valid session, redirect to signin
       const response = NextResponse.redirect(new URL("/signin", request.url));
@@ -64,7 +67,7 @@ export async function middleware(request: NextRequest) {
     if (user) {
       // Valid session, redirect to dashboard
       const response = NextResponse.redirect(
-        new URL(DASHBOARD_PAGE, request.url),
+        new URL("/dashboard", request.url),
       );
       refreshSessionCookie(response, sessionToken!);
       return response;
@@ -75,6 +78,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // For any other routes, just refresh session if valid
+  // Not expected to get to this point cos all needed pages and routes already handled
   if (user) {
     refreshSessionCookie(proceedResponse, sessionToken!);
   }
@@ -84,5 +88,12 @@ export async function middleware(request: NextRequest) {
 
 // Middleware run for these routes
 export const config = {
-  matcher: ["/", "/signin", "/signup", "/dashboard", "/api/urls/shorten"],
+  matcher: [
+    "/",
+    "/signin",
+    "/signup",
+    "/dashboard",
+    "/api/urls/shorten",
+    "/analytics/:path",
+  ],
 };

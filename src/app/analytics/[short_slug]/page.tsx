@@ -33,8 +33,7 @@ interface AnalyticsData {
 
 export default async function AnalyticsPage({ params }: AnalyticsPageProps) {
   const authenticated = await isAuthenticated();
-
-  if (!authenticated) redirect("/signin");
+  if (!authenticated) redirect("/signin"); // not really necessary. Already done in middleware
 
   const { short_slug } = await params;
   if (!short_slug) redirect("/dashboard");

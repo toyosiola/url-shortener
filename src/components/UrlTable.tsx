@@ -116,9 +116,10 @@ export default function UrlTable({ urls }: { urls: UrlData[] }) {
                   </div>
                 </td>
 
-                <td className="px-4 py-4 text-sm text-gray-600">
+                <td className="px-4 py-4 text-sm text-nowrap text-gray-600">
                   {formatDate(url.created_at)}
                 </td>
+
                 <td className="px-4 py-4">
                   <Link
                     href={`/analytics/${url.short_slug}`}

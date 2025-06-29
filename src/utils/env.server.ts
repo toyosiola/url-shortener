@@ -24,6 +24,9 @@ const envSchema = z.object({
   // Redis
   REDIS_URL: z.string().url(),
   REDIS_TOKEN: z.string().min(1),
+
+  // IPStack
+  IPSTACK_ACCESS_KEY: z.string().min(1),
 });
 
 function validateEnv() {

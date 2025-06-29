@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
         shortenedUrl,
       },
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         errors: {

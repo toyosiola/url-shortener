@@ -9,7 +9,7 @@ const copyToClipboard = async (url: string) => {
   try {
     await navigator.clipboard.writeText(url);
     toast.success("URL copied to clipboard!", { duration: 3000 });
-  } catch (error) {
+  } catch {
     toast.error("Failed to copy URL", { duration: 3000 });
   }
 };
@@ -29,8 +29,8 @@ export default function UrlTable({ urls }: { urls: UrlData[] }) {
           Your Shortened URLs
         </h2>
         <p className="text-gray-600">
-          You haven't created any shortened URLs yet. Start by shortening your
-          first URL above!
+          You haven&apos;t created any shortened URLs yet. Start by shortening
+          your first URL above!
         </p>
       </div>
     );

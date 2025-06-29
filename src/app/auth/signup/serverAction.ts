@@ -11,7 +11,7 @@ import { z } from "zod";
 import pool from "@/utils/db";
 import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
-import { PoolClient } from "pg";
+import { DatabaseError, type PoolClient } from "pg";
 
 type SignUpActionResult =
   | { success: true; message: string }
@@ -145,10 +145,10 @@ export async function signUpAction(
           "Account created! Please check your email to verify your account.",
       };
     }
-  } catch (err: any) {
+  } catch (err) {
     await client?.query("ROLLBACK");
     // Handle unique violation (email). Not expected behavior but just in case
-    if (err.code === "23505") {
+    if (err instanceof DatabaseError && err.code === "23505") {
       return {
         success: false,
         errors: {

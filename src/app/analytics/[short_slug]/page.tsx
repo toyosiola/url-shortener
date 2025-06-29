@@ -194,8 +194,8 @@ export default async function AnalyticsPage({ params }: AnalyticsPageProps) {
               No Analytics Data
             </h2>
             <p className="mt-2 text-gray-600">
-              This URL hasn't been clicked yet. Analytics will appear here once
-              people start using your shortened URL.
+              This URL hasn&apos;t been clicked yet. Analytics will appear here
+              once people start using your shortened URL.
             </p>
           </div>
         )}

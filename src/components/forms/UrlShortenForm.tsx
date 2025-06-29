@@ -66,7 +66,7 @@ async function formAction(
       if (result.errors?._errors?.[0]) toast.error(result.errors._errors[0]);
       return { errors: result.errors, data: rawData };
     }
-  } catch (error) {
+  } catch {
     toast.error("An error occurred. Please try again.");
     return { data: rawData };
   }

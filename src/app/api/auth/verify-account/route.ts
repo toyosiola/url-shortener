@@ -66,7 +66,7 @@ export async function GET(req: NextRequest) {
       maxAge: 60 * 60 * 24 * 7, // 7 days
     });
     return response;
-  } catch (err) {
+  } catch {
     await client?.query("ROLLBACK");
     return NextResponse.redirect(
       `${server_env.BASE_URL}/signup?error=${encodeURIComponent("An unexpected error occurred. Please try again.")}`,

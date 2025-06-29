@@ -1,4 +1,5 @@
 import SignUpForm from "@/components/forms/SignUpForm";
+import { Suspense } from "react";
 
 // TODO: Signed-in user should not be able to access this page
 export default function SignupPage() {
@@ -8,7 +9,11 @@ export default function SignupPage() {
         <h2 className="text-center text-2xl font-bold text-gray-800">
           Create your account
         </h2>
-        <SignUpForm />
+
+        {/* signupform uses useSearchParams. Need to be wrapped in suspense for page preprendering purposes. Else error */}
+        <Suspense>
+          <SignUpForm />
+        </Suspense>
       </div>
     </main>
   );

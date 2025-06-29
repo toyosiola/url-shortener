@@ -3,6 +3,16 @@
 import { Copy, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
+import { formatDate } from "@/utils/formatDate";
+
+const copyToClipboard = async (url: string) => {
+  try {
+    await navigator.clipboard.writeText(url);
+    toast.success("URL copied to clipboard!", { duration: 3000 });
+  } catch (error) {
+    toast.error("Failed to copy URL", { duration: 3000 });
+  }
+};
 
 export interface UrlData {
   id: string;
@@ -12,25 +22,6 @@ export interface UrlData {
 }
 
 export default function UrlTable({ urls }: { urls: UrlData[] }) {
-  const copyToClipboard = async (url: string) => {
-    try {
-      await navigator.clipboard.writeText(url);
-      toast.success("URL copied to clipboard!", { duration: 3000 });
-    } catch (error) {
-      toast.error("Failed to copy URL", { duration: 3000 });
-    }
-  };
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   if (urls.length === 0) {
     return (
       <div className="rounded-xl bg-white p-8 shadow-md">

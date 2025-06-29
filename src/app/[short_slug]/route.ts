@@ -24,6 +24,7 @@ interface GeoData {
   continent_code?: string;
   region_name?: string;
   region_code?: string;
+  city?: string;
 }
 
 async function getGeoData(ip: string): Promise<GeoData> {
@@ -40,7 +41,7 @@ async function getGeoData(ip: string): Promise<GeoData> {
     }
 
     const response = await fetch(
-      `http://api.ipstack.com/${ip}?access_key=${server_env.IPSTACK_ACCESS_KEY}`,
+      `https://api.ipstack.com/${ip}?access_key=${server_env.IPSTACK_ACCESS_KEY}`,
     );
     const data = await response.json();
 
@@ -51,6 +52,7 @@ async function getGeoData(ip: string): Promise<GeoData> {
       continent_code: data.continent_code,
       region_name: data.region_name,
       region_code: data.region_code,
+      city: data.city,
     };
   } catch (error) {
     console.error("Error fetching geo data:", error);
@@ -108,8 +110,8 @@ export async function GET(
         await pool.query(
           `INSERT INTO url_clicks (
             url_id, ip_address, country_name, country_code, continent_name, continent_code, 
-            region_name, region_code, device, browser, operation_system
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
+            region_name, region_code, city, device, browser, operation_system
+          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
           [
             url_id,
             ip,
@@ -119,6 +121,7 @@ export async function GET(
             geoData.continent_code || "unknown",
             geoData.region_name || "unknown",
             geoData.region_code || "unknown",
+            geoData.city || "unknown",
             deviceInfo.device,
             deviceInfo.browser,
             deviceInfo.operation_system,

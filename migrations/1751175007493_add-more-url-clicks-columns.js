@@ -12,6 +12,7 @@ exports.up = (pgm) => {
   pgm.sql(`
     -- Rename country column to country_name
     ALTER TABLE url_clicks RENAME COLUMN country TO country_name;
+    ALTER TABLE url_clicks RENAME COLUMN region TO region_name;
     
     -- Add new columns to url_clicks table
     ALTER TABLE url_clicks 
@@ -19,7 +20,6 @@ exports.up = (pgm) => {
     ADD COLUMN continent_name VARCHAR(100),
     ADD COLUMN continent_code VARCHAR(10),
     ADD COLUMN region_code VARCHAR(10),
-    ADD COLUMN region_name VARCHAR(100),
     ADD COLUMN operation_system TEXT;
   `);
 };
@@ -37,10 +37,10 @@ exports.down = (pgm) => {
     DROP COLUMN continent_name,
     DROP COLUMN continent_code,
     DROP COLUMN region_code,
-    DROP COLUMN region_name,
     DROP COLUMN operation_system;
     
-    -- Rename country_name back to country
+    -- Reverse the columns renaming
     ALTER TABLE url_clicks RENAME COLUMN country_name TO country;
+    ALTER TABLE url_clicks RENAME COLUMN region_name TO region;
   `);
 };

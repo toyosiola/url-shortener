@@ -2,7 +2,7 @@ import "server-only";
 
 import { Pool } from "pg";
 import server_env from "@/utils/env.server";
-// import "./runMigrations";
+// import "./runMigrations"; // always comment this out after running migrations. Package is a dev dependency
 
 const pool = new Pool({
   host: server_env.DB_HOST,

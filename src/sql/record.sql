@@ -47,3 +47,25 @@ CREATE TABLE IF NOT EXISTS url_clicks (
 CREATE INDEX urls_user_id_idx ON urls(user_id);
 
 CREATE INDEX url_clicks_url_id_idx ON url_clicks(url_id);
+
+-- =====================================================================
+-- Rename country column to country_name
+ALTER TABLE
+  url_clicks RENAME COLUMN country TO country_name;
+
+ALTER TABLE
+  url_clicks RENAME COLUMN region TO region_name;
+
+-- Add new columns to url_clicks table
+ALTER TABLE
+  url_clicks
+ADD
+  COLUMN country_code VARCHAR(10),
+ADD
+  COLUMN continent_name VARCHAR(100),
+ADD
+  COLUMN continent_code VARCHAR(10),
+ADD
+  COLUMN region_code VARCHAR(10),
+ADD
+  COLUMN operation_system TEXT;

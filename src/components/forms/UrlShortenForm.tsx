@@ -56,9 +56,9 @@ async function formAction(
       router.refresh(); // refresh the page to show the new entry
       return initialState; // Reset form
     } else {
-      // If user is not authenticated, redirect to siginin page
+      // If user is not authenticated, redirect to signin page
       if (response.status === 401) {
-        router.push("/signin");
+        router.push("/auth/signin");
         return initialState;
       }
 

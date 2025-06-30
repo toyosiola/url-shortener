@@ -8,7 +8,7 @@ export default async function DashboardPage() {
   const user = await getUser();
 
   if (!user) {
-    redirect("/signin");
+    redirect("/auth/signin");
   }
 
   // Fetch user's URLs ordered by most recent first

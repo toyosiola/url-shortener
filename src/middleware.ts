@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 import server_env from "@/utils/env.server";
 
-const AUTH_PAGES = ["/", "/signin", "/signup"];
+const AUTH_PAGES = ["/", "/auth/signin", "/auth/signup"];
 const PROTECTED_ROUTES = ["/dashboard", "/api/urls/shorten", "/analytics"];
 const SESSION_COOKIE = "session";
 const JWT_SECRET = server_env.JWT_SECRET;
@@ -51,7 +51,9 @@ export async function middleware(request: NextRequest) {
   ) {
     if (!user) {
       // No valid session, redirect to signin
-      const response = NextResponse.redirect(new URL("/signin", request.url));
+      const response = NextResponse.redirect(
+        new URL("/auth/signin", request.url),
+      );
       // delete invalid session token if it exists
       if (sessionToken) response.cookies.delete(SESSION_COOKIE);
       return response;
@@ -90,8 +92,8 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/",
-    "/signin",
-    "/signup",
+    "/auth/signin",
+    "/auth/signup",
     "/dashboard",
     "/api/urls/shorten",
     "/analytics/:path",

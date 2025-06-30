@@ -61,7 +61,7 @@ export async function signInAction(
     }
   } catch {
     return {
-      errors: { _errors: ["An error occured. Please try again."] },
+      errors: { _errors: ["An error occurred. Please try again."] },
       data: rawData,
     };
   }
@@ -69,7 +69,7 @@ export async function signInAction(
   // Check if account is verified
   if (!user.account_verified) {
     redirect(
-      `/signup?error=${encodeURIComponent("Please verify your email before signing in.")}`,
+      `/auth/signup?error=${encodeURIComponent("Please verify your email before signing in.")}`,
     );
   }
 
